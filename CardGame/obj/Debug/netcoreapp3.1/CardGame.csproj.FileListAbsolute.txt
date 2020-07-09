@@ -1,0 +1,17 @@
+C:\Users\user\CardGame\CardGame\bin\Debug\netcoreapp3.1\CardGame.exe
+C:\Users\user\CardGame\CardGame\bin\Debug\netcoreapp3.1\CardGame.deps.json
+C:\Users\user\CardGame\CardGame\bin\Debug\netcoreapp3.1\CardGame.runtimeconfig.json
+C:\Users\user\CardGame\CardGame\bin\Debug\netcoreapp3.1\CardGame.runtimeconfig.dev.json
+C:\Users\user\CardGame\CardGame\bin\Debug\netcoreapp3.1\CardGame.dll
+C:\Users\user\CardGame\CardGame\bin\Debug\netcoreapp3.1\CardGame.pdb
+C:\Users\user\CardGame\CardGame\obj\Debug\netcoreapp3.1\CardGame.csprojAssemblyReference.cache
+C:\Users\user\CardGame\CardGame\obj\Debug\netcoreapp3.1\CardGame.AssemblyInfoInputs.cache
+C:\Users\user\CardGame\CardGame\obj\Debug\netcoreapp3.1\CardGame.AssemblyInfo.cs
+C:\Users\user\CardGame\CardGame\obj\Debug\netcoreapp3.1\CardGame.csproj.CoreCompileInputs.cache
+C:\Users\user\CardGame\CardGame\obj\Debug\netcoreapp3.1\CardGame.dll
+C:\Users\user\CardGame\CardGame\obj\Debug\netcoreapp3.1\CardGame.pdb
+C:\Users\user\CardGame\CardGame\obj\Debug\netcoreapp3.1\CardGame.genruntimeconfig.cache
+C:\Users\user\CardGame\CardGame\bin\Debug\netcoreapp3.1\System.Net.Http.Formatting.dll
+C:\Users\user\CardGame\CardGame\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
+C:\Users\user\CardGame\CardGame\bin\Debug\netcoreapp3.1\Newtonsoft.Json.Bson.dll
+C:\Users\user\CardGame\CardGame\obj\Debug\netcoreapp3.1\CardGame.csproj.CopyComplete
