@@ -1,5 +1,5 @@
 ﻿namespace CardGame.API.Models
 {
-    enum Suit { Clubs, Diamonds, Hearts, Spades }
+    public enum Suit { Clubs, Diamonds, Hearts, Spades }
 }
 

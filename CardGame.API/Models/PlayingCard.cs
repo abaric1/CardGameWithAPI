@@ -2,9 +2,9 @@
 
 namespace CardGame.API.Models
 {
-    class PlayingCard
+    public class PlayingCard
     {
-        public Suit Suit { get; }
+        public Suit Suit { get;}
         public Value Value { get; }
         public PlayingCard(Suit suit, Value value)
         {

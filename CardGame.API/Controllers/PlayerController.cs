@@ -6,6 +6,7 @@ using BackendlessAPI.Exception;
 using CardGame.API.Models;
 using System.Threading.Tasks;
 using System;
+using BackendlessAPI.Persistence;
 
 namespace CardGame.API.Controllers
 {
@@ -17,6 +18,19 @@ namespace CardGame.API.Controllers
         {
             Backendless.InitApp( "47BE5FFA-993F-0CAC-FFA9-CD4995406400",
                                  "3B4C0B58-ED57-4DEB-835C-517094CB7EEC" );
+        }
+
+        [HttpGet("init/{name}")]
+        public bool InitPlayer(string name)
+        {
+            DataQueryBuilder queryBuilder = DataQueryBuilder.Create();
+            queryBuilder.SetWhereClause( $"name = '{name}'");
+            var result = Backendless.Data.Of<Player>().Find( queryBuilder );
+            // System.Console.WriteLine(result[0]);
+            if(result.Count > 0)
+                return false;
+            
+            return true;
         }
 
         //get player
