@@ -15,3 +15,8 @@ C:\Users\user\CardGame\CardGame\bin\Debug\netcoreapp3.1\System.Net.Http.Formatti
 C:\Users\user\CardGame\CardGame\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
 C:\Users\user\CardGame\CardGame\bin\Debug\netcoreapp3.1\Newtonsoft.Json.Bson.dll
 C:\Users\user\CardGame\CardGame\obj\Debug\netcoreapp3.1\CardGame.csproj.CopyComplete
+C:\Users\user\CardGame\CardGame\bin\Debug\netcoreapp3.1\Backendless.dll
+C:\Users\user\CardGame\CardGame\bin\Debug\netcoreapp3.1\EngineIoClientDotNet.dll
+C:\Users\user\CardGame\CardGame\bin\Debug\netcoreapp3.1\SocketIoClientDotNet.dll
+C:\Users\user\CardGame\CardGame\bin\Debug\netcoreapp3.1\SuperSocket.ClientEngine.dll
+C:\Users\user\CardGame\CardGame\bin\Debug\netcoreapp3.1\WebSocket4Net.dll

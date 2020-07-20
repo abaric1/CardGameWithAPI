@@ -1,5 +1,11 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
+using BackendlessAPI;  
+using BackendlessAPI.Async;  
+using BackendlessAPI.Exception;
+using CardGame.API.Models;
+using System.Threading.Tasks;
+using System;
 
 namespace CardGame.API.Controllers
 {
@@ -7,43 +13,91 @@ namespace CardGame.API.Controllers
     [Route("[controller]")]
     public class PlayerController : ControllerBase
     {
-
-        [HttpGet]
-        public List<string> GetPlayers()
+        public PlayerController()
         {
-            // var values = await _context.Values.ToListAsync();
-            // return Ok(values);
+            Backendless.InitApp( "47BE5FFA-993F-0CAC-FFA9-CD4995406400",
+                                 "3B4C0B58-ED57-4DEB-835C-517094CB7EEC" );
+        }
 
-            string[] players = { "Mike", "Don" };    
-            List<string> playersList = new List<string>(players);
-
-            return playersList;
+        //get player
+        [HttpGet]
+        public List<Player> GetPlayersList()
+        {
+            IList<Player> playerslist = Backendless.Data.Of<Player>().Find();
+            return (List<Player>)playerslist; 
         }
 
         [HttpGet("{id}")]
-        public string GetPlayer(int id)
+        public Player GetPlayer(string id)
         {
-            // var value = await _context.Values.FirstOrDefaultAsync(x => x.Id == id);
-            // return Ok(value);
-
-            var player = "Bob";
+            Player player = Backendless.Data.Of<Player>().FindById(id);
             return player;
         }
 
         [HttpPost]
-        public void Post(string value)
-        {
+        public void PostPlayer(Player player)
+        {   
+            Backendless.Data.Of<Player>().Save(player);
         }
 
         [HttpPut("{id}")]
-        public void Put(int id, string value)
+        public void PutPlayer(Player updatedplayer)
         {
+            Player player = Backendless.Data.Of<Player>().FindById(updatedplayer.objectId);
+            player.score = updatedplayer.score;
+
+            Backendless.Persistence.Of<Player>().Save(player);
+
         }
 
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public void DeletePlayer(string id)
         {
+            Player player = Backendless.Data.Of<Player>().FindById(id);
+            Backendless.Data.Of<Player>().Remove(player);
         }
+
+        /*
+        //get player async
+        [HttpGet]
+        public List<Player> GetPlayersList()
+        {
+            var check = 0;
+            AsyncCallback<IList<Player>> responder = new AsyncCallback<IList<Player>>(
+                responseHandler => {
+                    Console.WriteLine("response");
+                    System.Console.WriteLine(responseHandler);
+                    playerslist = responseHandler;
+                    check = 1;
+                }
+                ,errorHandler => Console.WriteLine("error")
+                );
+
+           Backendless.Data.Of<Player>().Find(responder);
+           do {  } while(check == 0);
+           return (List<Player>)playerslist;
+            
+        }
+
+        //post player async
+        [HttpPost]
+        public void PostPlayer(Player player)
+        {   
+            // 2. save object asynchronously
+            AsyncCallback<Player> responder = new AsyncCallback<Player>(
+                result =>
+                {
+                System.Console.WriteLine("player has been saved");
+                },
+                fault =>
+                {
+                System.Console.WriteLine("server reported an error");
+                });
+
+            Backendless.Data.Of<Player>().Save(player, responder);
+        }
+
+        */
         
     }
 }
