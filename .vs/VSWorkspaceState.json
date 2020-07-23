@@ -1,6 +1,8 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\CardGame"
   ],
+  "SelectedNode": "\\CardGame\\GameLogic.cs",
   "PreviewInSolutionExplorer": false
 }

@@ -17,11 +17,20 @@ namespace CardGame
         static HttpClient client = new HttpClient();
         static async Task Main(string[] args)
         {   
-                        using (client)
+            using (client)
             {
                 // spajanje na API
                 client.BaseAddress = new Uri("http://localhost:5000/");
-                // var database = new DataAcess();
+                // Player player = new Player("Petra", 5); - get who is the player
+                // await CreateNewPlayerAsync(player);
+                // await DataAcess.GetPlayersAsync("player");
+                // await DataAcess.GetPlayerAsync("player/60F886EC-962B-4412-8754-C56929CF43BD");
+                // player.score = 7;
+                // player.objectId = "60F886EC-962B-4412-8754-C56929CF43BD";
+                // await UpdatePlayerAsync(player);
+                // await DeletePlayerAsync("60F886EC-962B-4412-8754-C56929CF43BD");
+
+                // await GetCardAsync("card");
                 int option1, option2;
                 do
                 {
@@ -47,20 +56,6 @@ namespace CardGame
 
                 Console.WriteLine("Enter your name");
                 string name = Console.ReadLine();
-
-                // get player
-                // check name??
-
-                // Player player = new Player("Petra", 5); - get who is the player
-                // await CreateNewPlayerAsync(player);
-                // await DataAcess.GetPlayersAsync("player");
-                // await DataAcess.GetPlayerAsync("player/60F886EC-962B-4412-8754-C56929CF43BD");
-                // player.score = 7;
-                // player.objectId = "60F886EC-962B-4412-8754-C56929CF43BD";
-                // await UpdatePlayerAsync(player);
-                // await DeletePlayerAsync("60F886EC-962B-4412-8754-C56929CF43BD");
-
-                // await GetCardAsync("card");
 
                 bool result = await DataAcess.InitCheckAsync($"player/init/{name}");
 
@@ -93,22 +88,54 @@ namespace CardGame
                 Console.WriteLine("Welcome {0}, game is starting...Good luck!", name);
                 Thread.Sleep(3000);
                 Console.Clear();
-                /*
+                
+                PlayingCard card1 = await Program.CardAcess.GetCardAsync("card");
                 bool play = true;
                 do
                 {
+                    System.Console.WriteLine(card1);
                     Player player = new Player(name, 0);
+                    // System.Console.WriteLine(card1);
+                    Console.WriteLine("higer or lower card? \n 1. Higher \n 2. Lower");
+                    int option3 = Convert.ToInt32(Console.ReadKey().Key);
+                    PlayingCard card2 = await Program.CardAcess.GetCardAsync("card");
+                    System.Console.WriteLine(card2);
 
-                    GameLogic.StartGame(player);
-                    int option4 = GameLogic.EndGame(player, newPlayer);
+                    var inputtt = new Input();
+                    inputtt._input = option3;
+                    inputtt._card1 = card1;
+                    inputtt._card2 = card2;
 
+
+                    bool resultt = await Program.CardAcess.ReadInputAsync(inputtt);
+                    if(resultt)
+                    {
+                        Console.WriteLine("That's right! You won a point.");
+                        player.score += 1;
+                        // card1 = card2;
+                        Thread.Sleep(2000);
+                        card1 = card2;
+                    }
+                    else
+                    {
+                        Console.WriteLine("End of game");
+                        play = false;
+                    }
+
+                    Console.Clear();
+                    // GameLogic.StartGame(player);
+                    //System.Console.WriteLine("End Game");
+                    //int option4 = GameLogic.EndGame(player, newPlayer);
+                    /*
                     switch (option4)
+
                     {
                         case 49:
                             player = new Player(name, 0);
                             newPlayer = false;
                             GameLogic.StartGame(player);
-                            GameLogic.EndGame(player, newPlayer);
+                            System.Console.WriteLine("End Game");
+                            //GameLogic.EndGame(player, newPlayer);
                             Console.Clear();
                             break;
                         case 50:
@@ -121,41 +148,11 @@ namespace CardGame
                         default:
                             break;
                     }
-                } while (play);    
-
-                */
+                    */
+                } while (play);          
             }
             Console.ReadLine();
         }  
-
-        // podjeli 1. kartu
-        // prihvati input posalji input
-        // podjeli drugu kartu - ispisi rezultat
-        // ....
-        static async Task<PlayingCard> GetCardAsync(string path)
-        {
-            // PlayingCard card = new PlayingCard();
-            HttpResponseMessage response = await client.GetAsync(path);
-            if (response.IsSuccessStatusCode)
-            {
-                PlayingCard card = await response.Content.ReadAsAsync<PlayingCard>();
-                System.Console.WriteLine(card);
-                return card;    
-            }
-            throw new Exception("error");
-        }
-
-        static async Task<Uri> ReadInputAsync(int input) {
-            
-        var response = await client.PostAsJsonAsync("card", input);
-        response.EnsureSuccessStatusCode();
-
-        // return URI of the created resource
-        return response.Headers.Location;
-        }
-
-
-
 
     }
 }

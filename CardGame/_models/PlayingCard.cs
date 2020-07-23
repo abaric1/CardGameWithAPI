@@ -2,7 +2,7 @@
 
 namespace CardGame._models
 {
-    class PlayingCard
+    public class PlayingCard
     {
         public Suit Suit { get; }
         public Value Value { get; }

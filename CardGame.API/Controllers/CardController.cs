@@ -1,3 +1,7 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Text.Json;
 using CardGame.API.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,18 +17,35 @@ namespace CardGame.API.Controllers
         [HttpGet]
         public PlayingCard GetRandomCard()
         {
-            // provjeriti ili li jos karata
-            // provjeriti je li vec karta podjeljena
-
             var pack = new Pack();
             PlayingCard card = pack.DealCardFromPack();
             return card;
         }
 
+
         [HttpPost]
-        public void PostInput(int input)
+        public bool PostInput(ArrayList input)
         {   
+            PlayingCard card1 = Newtonsoft.Json.JsonConvert.DeserializeObject<PlayingCard>(input[0].ToString());
+            PlayingCard card2 = Newtonsoft.Json.JsonConvert.DeserializeObject<PlayingCard>(input[1].ToString());
+            int option = Newtonsoft.Json.JsonConvert.DeserializeObject<int>(input[2].ToString());
             
+            switch (option)
+            {
+                case 49:
+                    if ((int)card2.Value >= (int)card1.Value)
+                        return true;
+  
+                    return false;
+                    
+                case 50:
+                    if ((int)card2.Value <= (int)card1.Value)
+                        return true;
+                    
+                    return false;
+
+                default: throw new Exception();
+            } 
         }
 
     }
