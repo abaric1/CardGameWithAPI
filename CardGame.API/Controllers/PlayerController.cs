@@ -20,19 +20,6 @@ namespace CardGame.API.Controllers
                                  "3B4C0B58-ED57-4DEB-835C-517094CB7EEC" );
         }
 
-        [HttpGet("init/{name}")]
-        public bool InitPlayer(string name)
-        {
-            DataQueryBuilder queryBuilder = DataQueryBuilder.Create();
-            queryBuilder.SetWhereClause( $"name = '{name}'");
-            var result = Backendless.Data.Of<Player>().Find( queryBuilder );
-            // System.Console.WriteLine(result[0]);
-            if(result.Count > 0)
-                return false;
-            
-            return true;
-        }
-
         //get player
         [HttpGet]
         public List<Player> GetPlayersList()
@@ -46,6 +33,17 @@ namespace CardGame.API.Controllers
         {
             Player player = Backendless.Data.Of<Player>().FindById(id);
             return player;
+        }
+
+        [HttpGet("init/{name}")]
+        public string InitPlayer(string name)
+        {
+            DataQueryBuilder queryBuilder = DataQueryBuilder.Create();
+            queryBuilder.SetWhereClause( $"name = '{name}'");
+            var result = Backendless.Data.Of<Player>().Find( queryBuilder );
+            if(result.Count > 0)
+                return result[0].objectId;
+            return "";
         }
 
         [HttpPost]

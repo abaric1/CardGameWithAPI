@@ -5,11 +5,13 @@ using System.Threading;
 using CardGame._models;
 using System.Net.Http;
 using System.Net;
+using System.Threading.Tasks;
 
 namespace CardGame
 {
     public class GameLogic
     {
+        /*
         public static async void StartGame(Player player)
         {
             bool play = true;
@@ -30,7 +32,7 @@ namespace CardGame
                 Console.Clear();
 
                 //http post input vraca bool - yes that right/ or no that wrong
-/*
+
                 if (IsInputValid(option3))
                 {
                     Console.WriteLine(card2);
@@ -48,26 +50,26 @@ namespace CardGame
                     }
                     
                     Console.Clear();
-                } */
+                } 
             }
         }
 
-/*
-        public static int EndGame(Player player, bool newPlayer)
+*/
+        public static async Task<int> EndGame(Player player, bool newPlayer)
         {
             Console.WriteLine("The end of the game.");
-            Console.WriteLine("Your score is: {0} of 52", player.Score);
+            Console.WriteLine("Your score is: {0} of 52", player.score);
 
-            //post in database result and player
-            //var database = new DataAcess();
-            //database.OpenConnection();
             if (newPlayer)
             {
-                // database.AddData(player);
+                await Program.DataAcess.CreateNewPlayerAsync(player);
             }
             else
             {
-                if (database.CheckScore(player)) { database.UpdateData(player); }
+                Player oldData = await Program.DataAcess.GetPlayerAsync($"player/{player.objectId}");
+                if (oldData.score < player.score) { 
+                    await Program.DataAcess.UpdatePlayerAsync(player);
+                 }
             }
 
             int option4;
@@ -79,7 +81,7 @@ namespace CardGame
             } while (!IsInputValid(option4));
             return option4;
         }
-        */
+        
 
         private static bool IsInputValid(int input)
         {

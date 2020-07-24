@@ -26,9 +26,12 @@ namespace CardGame.API.Controllers
         [HttpPost]
         public bool PostInput(ArrayList input)
         {   
-            PlayingCard card1 = Newtonsoft.Json.JsonConvert.DeserializeObject<PlayingCard>(input[0].ToString());
-            PlayingCard card2 = Newtonsoft.Json.JsonConvert.DeserializeObject<PlayingCard>(input[1].ToString());
-            int option = Newtonsoft.Json.JsonConvert.DeserializeObject<int>(input[2].ToString());
+            PlayingCard card1 = Newtonsoft.Json.JsonConvert
+                .DeserializeObject<PlayingCard>(input[0].ToString());
+            PlayingCard card2 = Newtonsoft.Json.JsonConvert
+                .DeserializeObject<PlayingCard>(input[1].ToString());
+            int option = Newtonsoft.Json.JsonConvert
+                .DeserializeObject<int>(input[2].ToString());
             
             switch (option)
             {

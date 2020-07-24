@@ -10,6 +10,7 @@ using BackendlessAPI;
 using BackendlessAPI.Async;
 using BackendlessAPI.Exception;
 using CardGame._models;
+
 namespace CardGame
 {
     public partial class Program
@@ -17,19 +18,19 @@ namespace CardGame
         public class DataAcess {
 
         // init check
-        public static async Task<bool> InitCheckAsync(string path)
+        public static async Task<string> InitCheckAsync(string path)
         {
             HttpResponseMessage response = await client.GetAsync(path);
             if (response.IsSuccessStatusCode)
             {
-                bool result = await response.Content.ReadAsAsync<bool>();           
+                var result = response.Content.ReadAsStringAsync().Result;  
                 return result;
             }
             throw new Exception(); // ???
         }
 
         //http post player
-        static async Task<Uri> CreateNewPlayerAsync(Player player) {
+        public static async Task<Uri> CreateNewPlayerAsync(Player player) {
             
         var response = await client.PostAsJsonAsync("player", player);
         response.EnsureSuccessStatusCode();

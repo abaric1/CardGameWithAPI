@@ -57,10 +57,10 @@ namespace CardGame
                 Console.WriteLine("Enter your name");
                 string name = Console.ReadLine();
 
-                bool result = await DataAcess.InitCheckAsync($"player/init/{name}");
-
+                string objectId = await DataAcess.InitCheckAsync($"player/init/{name}");
+                
                 bool newPlayer = true;
-                 if (!result)
+                 if (objectId != "")
                 {
                     bool valid = false;
                     while (!valid)
@@ -78,7 +78,9 @@ namespace CardGame
                             case 50:
                                 Console.WriteLine("Enter new name");
                                 name = Console.ReadLine();
-                                valid = await DataAcess.InitCheckAsync($"player/init/{name}");
+                                string obj = await DataAcess.InitCheckAsync($"player/init/{name}");
+                                if(obj != "")
+                                    valid = true;
                                 break;
                         }
                     }
@@ -91,10 +93,10 @@ namespace CardGame
                 
                 PlayingCard card1 = await Program.CardAcess.GetCardAsync("card");
                 bool play = true;
+                Player player = new Player(objectId, name, 0);
                 do
                 {
                     System.Console.WriteLine(card1);
-                    Player player = new Player(name, 0);
                     // System.Console.WriteLine(card1);
                     Console.WriteLine("higer or lower card? \n 1. Higher \n 2. Lower");
                     int option3 = Convert.ToInt32(Console.ReadKey().Key);
@@ -112,13 +114,13 @@ namespace CardGame
                     {
                         Console.WriteLine("That's right! You won a point.");
                         player.score += 1;
+                        System.Console.WriteLine(player.score);
                         // card1 = card2;
                         Thread.Sleep(2000);
                         card1 = card2;
                     }
                     else
                     {
-                        Console.WriteLine("End of game");
                         play = false;
                     }
 
@@ -149,7 +151,12 @@ namespace CardGame
                             break;
                     }
                     */
-                } while (play);          
+                } while (play);      
+
+                Console.WriteLine("End of game");
+                System.Console.WriteLine();   
+                GameLogic.EndGame(player, newPlayer);
+                 
             }
             Console.ReadLine();
         }  
