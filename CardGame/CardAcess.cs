@@ -25,6 +25,17 @@ namespace CardGame
                 throw new Exception("Karta nije dohvaćena.");
             }
 
+            public static async Task<bool> CheckIsPackEmptyAsync(string path)
+            {
+                HttpResponseMessage response = await client.GetAsync(path);
+                if (response.IsSuccessStatusCode)
+                {
+                    bool empty = await response.Content.ReadAsAsync<bool>();
+                    return empty;    
+                }
+                throw new Exception("Neuspješna provjera broja karata.");
+            }
+
             public static async Task<bool> ReadInputAsync(Input inputParameters) {
                 ArrayList paramList = new ArrayList() {
                     inputParameters.Card1, inputParameters.Card2, inputParameters.PlayerInput};

@@ -17,8 +17,8 @@ namespace CardGame
                 bool play = true;
                 Console.OutputEncoding = Encoding.UTF8; // za ispisivanje zaka karte
                 PlayingCard card1 = await Program.CardAcess.GetCardAsync("card");
-                
-                while(play) // pack empy????
+                bool count = await Program.CardAcess.CheckIsPackEmptyAsync("card/count");
+                while(play && count)
                 {
                     int gameInput;
                     do{
@@ -42,6 +42,7 @@ namespace CardGame
                         Console.WriteLine("That's right! You won a point.");
                         player.score += 1;
                         card1 = card2;
+                        count = await Program.CardAcess.CheckIsPackEmptyAsync("card/count");
                         Thread.Sleep(2000);
                     }
                     else

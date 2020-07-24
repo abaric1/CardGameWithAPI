@@ -58,9 +58,12 @@ namespace CardGame
                 } while (name == "");
 
                 string objectId = await PlayerAcess.InitCheckAsync($"player/init/{name}");
+
+                if(objectId == "") // zbog backendlessa
+                    objectId = null;
                 
                 bool newPlayer = true;
-                if (objectId != "")
+                if (objectId != null)
                 {
                     bool valid = false;
                     while (!valid)

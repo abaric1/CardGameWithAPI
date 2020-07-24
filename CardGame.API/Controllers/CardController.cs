@@ -20,6 +20,15 @@ namespace CardGame.API.Controllers
             return card;
         }
 
+        // get number of cards
+        [HttpGet("count")]
+        public bool GetCheckIsPackEmpty()
+        {
+            var pack = new Pack();
+            bool empty = pack.IsListEmpty();
+            return empty;
+        }
+
         // post input
         [HttpPost]
         public bool PostInput(ArrayList input)
