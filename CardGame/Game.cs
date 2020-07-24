@@ -55,7 +55,7 @@ namespace CardGame
         }
 
 
-        public static async Task<int> EndGame(Player player, bool newPlayer)
+        public static async Task<string> EndGame(Player player, bool newPlayer)
         {
             Console.WriteLine("The end of the game.");
             Console.WriteLine("Your score is: {0} of 52", player.score);
@@ -72,18 +72,8 @@ namespace CardGame
                 }
             }
 
-            int menuInputEnd;
-                do
-                {
-                    Console.WriteLine("Do you want to continue? \n" + 
-                                      "1. New game \n" +
-                                      "2. HighScore Table \n" +
-                                      "3. Exit");
-                    menuInputEnd = Convert.ToInt32(Console.ReadKey().Key);
-                    Console.Clear();
-                } while (!IsInputValid(menuInputEnd));
-
-            return menuInputEnd;
+            string objectId = await Program.PlayerAcess.InitCheckAsync($"player/init/{player.name}");
+            return objectId;
         }
         
 

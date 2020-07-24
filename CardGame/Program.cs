@@ -102,7 +102,15 @@ namespace CardGame
                 {
                     Player player = new Player(objectId, name, 0);
                     player = await Game.StartGame(player);
-                    menuInputEnd = await Game.EndGame(player, newPlayer);
+                    objectId = await Game.EndGame(player, newPlayer);
+                    do{
+                        Console.WriteLine("Do you want to continue? \n" + 
+                                        "1. New game \n" +
+                                        "2. HighScore Table \n" +
+                                        "3. Exit");
+                        menuInputEnd = Convert.ToInt32(Console.ReadKey().Key);
+                        Console.Clear();
+                    } while (!Game.IsInputValid(menuInputEnd));
                 }
                             
                 switch (menuInputEnd)
