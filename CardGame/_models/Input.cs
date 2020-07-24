@@ -5,19 +5,14 @@ namespace CardGame._models
 {
     public class Input
     {
-        public PlayingCard _card1 { get; set; }
-        public PlayingCard _card2 { get; set; }
-        public int _input { get; set; }
-        public Input()
+        public PlayingCard Card1 { get; set; }
+        public PlayingCard Card2 { get; set; }
+        public int PlayerInput { get; set; }
+        public Input(int playerInput, PlayingCard card1, PlayingCard card2)
         {
-            
-        }
-
-           public Input(int input, PlayingCard card1, PlayingCard card2)
-        {
-            _input = input;
-            _card1 = card1;
-            _card2 = card2;
+            PlayerInput = playerInput;
+            Card1 = card1;
+            Card2 = card2;
         }
     }
 }

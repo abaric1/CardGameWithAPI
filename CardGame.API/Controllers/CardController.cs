@@ -1,7 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Text.Json;
 using CardGame.API.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,7 +11,7 @@ namespace CardGame.API.Controllers
     { 
         public CardController() { }
 
-        //get card
+        // get card
         [HttpGet]
         public PlayingCard GetRandomCard()
         {
@@ -22,7 +20,7 @@ namespace CardGame.API.Controllers
             return card;
         }
 
-
+        // post input
         [HttpPost]
         public bool PostInput(ArrayList input)
         {   
@@ -50,6 +48,5 @@ namespace CardGame.API.Controllers
                 default: throw new Exception();
             } 
         }
-
     }
 }

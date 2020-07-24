@@ -21,55 +21,58 @@ namespace CardGame
             {
                 // spajanje na API
                 client.BaseAddress = new Uri("http://localhost:5000/");
-                // Player player = new Player("Petra", 5); - get who is the player
-                // await CreateNewPlayerAsync(player);
-                // await DataAcess.GetPlayersAsync("player");
-                // await DataAcess.GetPlayerAsync("player/60F886EC-962B-4412-8754-C56929CF43BD");
-                // player.score = 7;
-                // player.objectId = "60F886EC-962B-4412-8754-C56929CF43BD";
-                // await UpdatePlayerAsync(player);
-                // await DeletePlayerAsync("60F886EC-962B-4412-8754-C56929CF43BD");
 
-                // await GetCardAsync("card");
-                int option1, option2;
+                int menuInput, goBackInput;
                 do
                 {
-                    Console.WriteLine("**WELCOME TO CARD GAME** \n Please, write number for option you want: \n 1. Start new game \n 2. HighScore Tabe \n 3. Exit");
-                    option1 = Convert.ToInt32(Console.ReadKey().Key);
-                    if (option1 == 51)
-                    {
+                    Console.WriteLine("WELCOME TO CARD GAME \n" +
+                                      "Please, write number for option you want: \n" +
+                                      "1. Start new game \n" +
+                                      "2. HighScore Tabe \n" +
+                                      "3. Exit");
+                                 
+                    menuInput = Convert.ToInt32(Console.ReadKey().Key);
+
+                    if (menuInput == 51) 
                         Environment.Exit(0);
-                    }
-                    if (option1 == 50)
+
+                    if (menuInput == 50)
                     {
                         Console.Clear();
-                        await DataAcess.GetPlayersAsync("player");
+                        await PlayerAcess.GetPlayersAsync("player");
                         do
                         {
                             Console.WriteLine("Press 1 to go back");
-                            option2 = Convert.ToInt32(Console.ReadKey().Key);
+                            goBackInput = Convert.ToInt32(Console.ReadKey().Key);
                             Console.Clear();
-                        } while (option2 != 49);
+                        } while (goBackInput != 49);
                     }
                     Console.Clear();
-                } while (option1 != 49);
+                } while (menuInput != 49);
 
-                Console.WriteLine("Enter your name");
-                string name = Console.ReadLine();
+                string name;
+                do {
+                    Console.WriteLine("Enter your name");
+                    name = Console.ReadLine();
+                    Console.Clear();
+                } while (name == "");
 
-                string objectId = await DataAcess.InitCheckAsync($"player/init/{name}");
+                string objectId = await PlayerAcess.InitCheckAsync($"player/init/{name}");
                 
                 bool newPlayer = true;
-                 if (objectId != "")
+                if (objectId != "")
                 {
                     bool valid = false;
                     while (!valid)
                     {
                         Console.WriteLine("Name is already taken. Do you want to continue as {0}?", name);
-                        Console.WriteLine("1. Continue \n2. Pick another name");
-                        int opt = Convert.ToInt32(Console.ReadKey().Key);
+                        Console.WriteLine("1. Continue \n" +
+                                          "2. Pick another name");
+
+                        int nameMenuInput = Convert.ToInt32(Console.ReadKey().Key);
                         Console.Clear();
-                        switch (opt)
+
+                        switch (nameMenuInput)
                         {
                             case 49:
                                 newPlayer = false;
@@ -78,8 +81,8 @@ namespace CardGame
                             case 50:
                                 Console.WriteLine("Enter new name");
                                 name = Console.ReadLine();
-                                string obj = await DataAcess.InitCheckAsync($"player/init/{name}");
-                                if(obj != "")
+                                string checkNewName = await PlayerAcess.InitCheckAsync($"player/init/{name}");
+                                if(checkNewName == "")
                                     valid = true;
                                 break;
                         }
@@ -91,75 +94,29 @@ namespace CardGame
                 Thread.Sleep(3000);
                 Console.Clear();
                 
-                PlayingCard card1 = await Program.CardAcess.GetCardAsync("card");
-                bool play = true;
-                Player player = new Player(objectId, name, 0);
-                do
+                int menuInputEnd = 49;
+                while(menuInputEnd == 49)
                 {
-                    System.Console.WriteLine(card1);
-                    // System.Console.WriteLine(card1);
-                    Console.WriteLine("higer or lower card? \n 1. Higher \n 2. Lower");
-                    int option3 = Convert.ToInt32(Console.ReadKey().Key);
-                    PlayingCard card2 = await Program.CardAcess.GetCardAsync("card");
-                    System.Console.WriteLine(card2);
+                    Player player = new Player(objectId, name, 0);
+                    player = await Game.StartGame(player);
+                    menuInputEnd = await Game.EndGame(player, newPlayer);
+                }
+                            
+                switch (menuInputEnd)
+                {
+                    case 50:
+                        await PlayerAcess.GetPlayersAsync("player");
+                        Console.ReadKey();
+                        Environment.Exit(0);
+                        break;
+                    case 51:
+                        break;
+                    default:
+                        break;
+                }
 
-                    var inputtt = new Input();
-                    inputtt._input = option3;
-                    inputtt._card1 = card1;
-                    inputtt._card2 = card2;
-
-
-                    bool resultt = await Program.CardAcess.ReadInputAsync(inputtt);
-                    if(resultt)
-                    {
-                        Console.WriteLine("That's right! You won a point.");
-                        player.score += 1;
-                        System.Console.WriteLine(player.score);
-                        // card1 = card2;
-                        Thread.Sleep(2000);
-                        card1 = card2;
-                    }
-                    else
-                    {
-                        play = false;
-                    }
-
-                    Console.Clear();
-                    // GameLogic.StartGame(player);
-                    //System.Console.WriteLine("End Game");
-                    //int option4 = GameLogic.EndGame(player, newPlayer);
-                    /*
-                    switch (option4)
-
-                    {
-                        case 49:
-                            player = new Player(name, 0);
-                            newPlayer = false;
-                            GameLogic.StartGame(player);
-                            System.Console.WriteLine("End Game");
-                            //GameLogic.EndGame(player, newPlayer);
-                            Console.Clear();
-                            break;
-                        case 50:
-                            database.SelectData();
-                            Console.ReadKey();
-                            Environment.Exit(0);
-                            break;
-                        case 51:
-                            break;
-                        default:
-                            break;
-                    }
-                    */
-                } while (play);      
-
-                Console.WriteLine("End of game");
-                System.Console.WriteLine();   
-                GameLogic.EndGame(player, newPlayer);
-                 
+                Console.ReadLine();
             }
-            Console.ReadLine();
         }  
-
     }
 }

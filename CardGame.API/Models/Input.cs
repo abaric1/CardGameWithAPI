@@ -16,8 +16,4 @@ namespace CardGame.API.Models
             _card2 = card2;
         }
     }
-
-    public class InputList {
-            public List<Input> value { get; set; }
-    }
 }

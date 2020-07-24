@@ -11,6 +11,7 @@ namespace CardGame._models
             Suit = suit;
             Value = value;
         }
+        
         public override string ToString()
         {
             string symbol = GetSymbol(this.Suit);

@@ -1,11 +1,7 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using BackendlessAPI;  
-using BackendlessAPI.Async;  
-using BackendlessAPI.Exception;
+using BackendlessAPI;
 using CardGame.API.Models;
-using System.Threading.Tasks;
-using System;
 using BackendlessAPI.Persistence;
 
 namespace CardGame.API.Controllers
@@ -20,7 +16,7 @@ namespace CardGame.API.Controllers
                                  "3B4C0B58-ED57-4DEB-835C-517094CB7EEC" );
         }
 
-        //get player
+        // get player
         [HttpGet]
         public List<Player> GetPlayersList()
         {
@@ -28,6 +24,7 @@ namespace CardGame.API.Controllers
             return (List<Player>)playerslist; 
         }
 
+        // get player/id
         [HttpGet("{id}")]
         public Player GetPlayer(string id)
         {
@@ -35,6 +32,7 @@ namespace CardGame.API.Controllers
             return player;
         }
 
+        // get player/init/name
         [HttpGet("init/{name}")]
         public string InitPlayer(string name)
         {
@@ -46,12 +44,14 @@ namespace CardGame.API.Controllers
             return "";
         }
 
+        // post player
         [HttpPost]
         public void PostPlayer(Player player)
         {   
             Backendless.Data.Of<Player>().Save(player);
         }
 
+        // put player/id
         [HttpPut("{id}")]
         public void PutPlayer(Player updatedplayer)
         {
@@ -62,6 +62,7 @@ namespace CardGame.API.Controllers
 
         }
 
+        // delete player/id
         [HttpDelete("{id}")]
         public void DeletePlayer(string id)
         {

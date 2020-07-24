@@ -2,7 +2,7 @@ namespace CardGame.API.Models
 {
     public class Player
     {
-        public string objectId { get; set; }
+        public string objectId { get; set; } // backendless sam dodjeluje
         public string name { get; set; }
         public int score { get; set; }
         public Player() { } // mora biti parametless ctor zbog backendlessa
